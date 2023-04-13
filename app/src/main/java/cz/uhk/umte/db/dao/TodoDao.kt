@@ -12,10 +12,10 @@ interface TodoDao {
     @Delete
     fun delete(todo: TodoEntity)
 
-//    @Query("SELECT * FROM NoteEntity ORDER BY date WHERE DATE(date) >= DATE('now')")
+//    @Query("SELECT * FROM NoteEntity WHERE DATE(date) >= DATE('now') ORDER BY date")
 //    fun selectAllFollowing(): Flow<List<TodoEntity>>
 
-//    @Query("SELECT * FROM NoteEntity WHERE date IS NULL")
+//    @Query("SELECT * FROM NoteEntity WHERE date IS NULL ORDER BY DATE(date)")
 //    fun selectAllWithoutDate(): Flow<List<TodoEntity>>
 
 //    @Query("SELECT * FROM NoteEntity WHERE date IS NOT NULL ORDER BY date")
@@ -23,4 +23,7 @@ interface TodoDao {
 
     @Query("SELECT * FROM TodoEntity")
     fun selectAll(): Flow<List<TodoEntity>>
+
+    @Query("SELECT * FROM TodoEntity WHERE id=:id")
+    fun selectById(id: Long): Flow<TodoEntity>
 }

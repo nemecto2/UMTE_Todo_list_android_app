@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import cz.uhk.umte.ui.todo.TodoAddScreen
+import cz.uhk.umte.ui.todo_add.TodoAddScreen
+import cz.uhk.umte.ui.todo_detail.TodoDetailScreen
 import cz.uhk.umte.ui.todos_view.TodosAllScreen
 
 @Composable
@@ -23,31 +24,74 @@ fun Layout(
         composable(
             route = DestinationAllTodos,
         ) {
-//            TodoAddScreen()
-            TodosAllScreen()
+            TodosAllScreen(
+                controller = navController,
+            )
         }
 
         composable(
-            route = DestinationTodayTodos,
+            route = DestinationAddTodo,
         ) {
-            TodoAddScreen()
-//            TodosAllScreen()
+            TodoAddScreen(
+                controller = navController,
+            )
         }
 
+        composable(
+            route = DestinationTodoDetail,
+        ) { navBackStackEntry ->
+            TodoDetailScreen(
+                controller = navController,
+                todoId = navBackStackEntry.arguments?.getString(ArgTodoId).orEmpty().toLong(),
+            )
+        }
     }
 }
 
 
 // Destinations
+private const val ArgTodoId = "argTodoId"
+
 private const val DestinationAllTodos = "all_todos"
 private const val DestinationTodayTodos = "today_todos"
+private const val DestinationAddTodo = "add_todo"
+private const val DestinationTodoDetail = "todo_detail/{$ArgTodoId}"
 
 
 // Navigate functions
 fun NavHostController.navigateAllTodos() {
-    navigate(DestinationAllTodos)
+    if (currentDestination?.route.equals(DestinationAllTodos).not()) {
+        navigate(DestinationAllTodos)
+    }
 }
 
 fun NavHostController.navigateTodayTodos() {
     navigate(DestinationTodayTodos)
 }
+
+fun NavHostController.navigateAddTodo() {
+    if (currentDestination?.route.equals(DestinationAddTodo).not()) {
+        navigate(DestinationAddTodo)
+    }
+}
+
+fun NavHostController.navigateTodoDetail(id: Long) {
+    navigate(DestinationTodoDetail.replaceArg(ArgTodoId, id.toString()))
+}
+
+
+//fun NavHostController.navigateWithPopUp(
+//    toRoute: String,  // route name where you want to navigate
+//    fromRoute: String // route you want from popUpTo.
+//) {
+//    this.navigate(toRoute) {
+//        popUpTo(fromRoute) {
+//            inclusive = true // It can be changed to false if you
+//            // want to keep your fromRoute exclusive
+//        }
+//    }
+//}
+
+private fun String.replaceArg(argName: String, value: String) =
+    replace("{$argName}", value)
+

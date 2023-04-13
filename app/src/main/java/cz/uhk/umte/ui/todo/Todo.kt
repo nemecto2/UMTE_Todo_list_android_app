@@ -23,7 +23,7 @@ import cz.uhk.umte.db.entities.TodoEntity
 fun Todo(
     text: String,
     checked: Boolean,
-
+    date: String,
     handleChecked: (Boolean)->Unit,
     handleDetail: ()->Unit,
 ) {
@@ -49,5 +49,6 @@ fun Todo(
                 contentDescription = "Detail",
             )
         }
+        Text(text = date)
     }
 }

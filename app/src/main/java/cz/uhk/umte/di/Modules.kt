@@ -2,8 +2,9 @@ package cz.uhk.umte.di
 
 import androidx.room.Room
 import cz.uhk.umte.db.AppDatabase
-import cz.uhk.umte.ui.todo.TodoAddVM
-import cz.uhk.umte.ui.todos_view.TodosAllVM
+import cz.uhk.umte.ui.todo_add.TodoAddVM
+import cz.uhk.umte.ui.todo_detail.TodoDetailVM
+import cz.uhk.umte.ui.todos_view.TodosDateVM
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -16,8 +17,9 @@ val dataModule = module {
 }
 
 val uiModule = module {
-    viewModel { TodosAllVM(/*get()*/) } // TODO Zde je chyba?
+    viewModel { TodosDateVM(get()) }
     viewModel { TodoAddVM(get()) }
+    viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), noteDao = get(), todoId = todoId) }
 }
 
 private fun Module.db() {
@@ -33,5 +35,6 @@ private fun Module.db() {
     }
     // Dao
     single { get<AppDatabase>().noteDao() }
+    single { get<AppDatabase>().todoDao() }
 }
 
