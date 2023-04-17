@@ -1,4 +1,4 @@
-package cz.uhk.umte.ui.todo_add
+package cz.uhk.umte.ui.screens.todo_add
 
 import cz.uhk.umte.db.dao.TodoDao
 import cz.uhk.umte.db.entities.TodoEntity

@@ -2,9 +2,11 @@ package cz.uhk.umte.di
 
 import androidx.room.Room
 import cz.uhk.umte.db.AppDatabase
-import cz.uhk.umte.ui.todo_add.TodoAddVM
-import cz.uhk.umte.ui.todo_detail.TodoDetailVM
-import cz.uhk.umte.ui.todos_view.TodosDateVM
+import cz.uhk.umte.ui.screens.note_list.NoteListVM
+import cz.uhk.umte.ui.screens.todo_add.TodoAddVM
+import cz.uhk.umte.ui.screens.todo_detail.TodoDetailVM
+import cz.uhk.umte.ui.screens.todo_list.TodoListVM
+import cz.uhk.umte.ui.screens.todo_list_date.TodoListDateVM
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -17,9 +19,11 @@ val dataModule = module {
 }
 
 val uiModule = module {
-    viewModel { TodosDateVM(get()) }
+    viewModel { TodoListDateVM(get()) }
+    viewModel { TodoListVM(get()) }
     viewModel { TodoAddVM(get()) }
     viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), noteDao = get(), todoId = todoId) }
+    viewModel { NoteListVM(get()) }
 }
 
 private fun Module.db() {

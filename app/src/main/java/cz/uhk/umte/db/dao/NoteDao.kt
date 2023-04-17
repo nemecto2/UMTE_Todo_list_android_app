@@ -2,6 +2,7 @@ package cz.uhk.umte.db.dao
 
 import androidx.room.*
 import cz.uhk.umte.db.entities.NoteEntity
+import cz.uhk.umte.db.entities.TodoEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,6 +14,12 @@ interface NoteDao {
     @Delete
     fun delete(note: NoteEntity)
 
-//    @Query("SELECT id, text, checked FROM NoteEntity WHERE id=:id")
-//    fun selectById(id: Long): Flow<NoteEntity>
+    @Query("DELETE FROM NoteEntity WHERE todoId=:id")
+    fun deleteByTodoId(id: Long)
+
+    @Query("SELECT * FROM NoteEntity WHERE todoId=:id")
+    fun selectByTodoId(id: Long): Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM NoteEntity")
+    fun selectAll(): Flow<List<NoteEntity>>
 }

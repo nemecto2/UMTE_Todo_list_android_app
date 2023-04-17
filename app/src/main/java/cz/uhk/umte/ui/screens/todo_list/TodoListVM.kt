@@ -1,17 +1,15 @@
-package cz.uhk.umte.ui.todos_view
+package cz.uhk.umte.ui.screens.todo_list
 
 import cz.uhk.umte.db.dao.TodoDao
 import cz.uhk.umte.db.entities.TodoEntity
 import cz.uhk.umte.ui.base.BaseViewModel
 
-
-class TodosDateVM(
+class TodoListVM(
     private val todoDao: TodoDao,
 ) : BaseViewModel() {
     // Vytažení všech TODOS z databáze
-//    val todos = todoDao.selectAllFollowing()
-//    val todos = todoDao.selectAllWithoutDate()
-    val todos = todoDao.selectAll()
+    val todos = todoDao.selectAllWithoutDate()
+
 
     // Funkce pro screen
     fun handleTodoCheck(todo: TodoEntity) {
@@ -23,8 +21,4 @@ class TodosDateVM(
             )
         }
     }
-
-//    fun handleNavigateDetail(todo: TodoEntity) {
-//
-//    }
 }

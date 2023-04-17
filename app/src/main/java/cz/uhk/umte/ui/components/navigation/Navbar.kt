@@ -1,16 +1,14 @@
-package cz.uhk.umte.ui.navigation
+package cz.uhk.umte.ui.components.navigation
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import cz.uhk.umte.ui.navigateAddTodo
-import cz.uhk.umte.ui.navigateAllTodos
-import cz.uhk.umte.ui.navigateTodayTodos
+import cz.uhk.umte.ui.*
 
 
 @Composable
@@ -20,13 +18,13 @@ fun Navbar (
     BottomNavigation {
         BottomNavigationItem(
             label = { Text(text = "Nezařazené") },
-            onClick = { navController.navigateAllTodos() },
+            onClick = { navController.navigateTodosWithoutDate() },
             icon = { Icon(Icons.Default.Notifications, "") },
             selected = true
         )
         BottomNavigationItem(
             label = { Text(text = "Podle data") },
-            onClick = { navController.navigateAllTodos() },
+            onClick = { navController.navigateTodosDate() },
             icon = { Icon(Icons.Default.DateRange, "") },
             selected = true
         )
@@ -34,6 +32,12 @@ fun Navbar (
             label = { Text(text = "Přidat") },
             onClick = { navController.navigateAddTodo() },
             icon = { Icon(Icons.Default.Add, "") },
+            selected = true
+        )
+        BottomNavigationItem(
+            label = { Text(text = "Poznámky") },
+            onClick = { navController.navigateNoteList() },
+            icon = { Icon(Icons.Default.Edit, "") },
             selected = true
         )
     }

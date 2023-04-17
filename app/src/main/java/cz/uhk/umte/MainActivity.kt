@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.navigation.compose.rememberNavController
 import cz.uhk.umte.ui.Layout
-import cz.uhk.umte.ui.navigation.Navbar
+import cz.uhk.umte.ui.components.navigation.Navbar
 import cz.uhk.umte.ui.theme.UMTETheme
 
 

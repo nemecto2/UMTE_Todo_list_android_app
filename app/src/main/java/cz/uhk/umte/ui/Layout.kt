@@ -8,9 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import cz.uhk.umte.ui.todo_add.TodoAddScreen
-import cz.uhk.umte.ui.todo_detail.TodoDetailScreen
-import cz.uhk.umte.ui.todos_view.TodosAllScreen
+import cz.uhk.umte.ui.screens.note_list.NoteListScreen
+import cz.uhk.umte.ui.screens.todo_add.TodoAddScreen
+import cz.uhk.umte.ui.screens.todo_detail.TodoDetailScreen
+import cz.uhk.umte.ui.screens.todo_list.TodoListScreen
+import cz.uhk.umte.ui.screens.todo_list_date.TodoListDateScreen
 
 @Composable
 fun Layout(
@@ -18,13 +20,21 @@ fun Layout(
 ) {
     NavHost(
         navController = navController,
-        startDestination = DestinationAllTodos,
+        startDestination = DestinationTodosDate,
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
     ) {
         composable(
-            route = DestinationAllTodos,
+            route = DestinationTodosDate,
         ) {
-            TodosAllScreen(
+            TodoListDateScreen(
+                controller = navController,
+            )
+        }
+
+        composable(
+            route = DestinationTodosWithoutDate,
+        ) {
+            TodoListScreen(
                 controller = navController,
             )
         }
@@ -45,6 +55,14 @@ fun Layout(
                 todoId = navBackStackEntry.arguments?.getString(ArgTodoId).orEmpty().toLong(),
             )
         }
+
+        composable(
+            route = DestinationNoteList,
+        ) {
+            NoteListScreen(
+                controller = navController,
+            )
+        }
     }
 }
 
@@ -52,21 +70,24 @@ fun Layout(
 // Destinations
 private const val ArgTodoId = "argTodoId"
 
-private const val DestinationAllTodos = "all_todos"
-private const val DestinationTodayTodos = "today_todos"
+private const val DestinationTodosWithoutDate = "todos_without_date"
+private const val DestinationTodosDate = "todos_date"
 private const val DestinationAddTodo = "add_todo"
 private const val DestinationTodoDetail = "todo_detail/{$ArgTodoId}"
+private const val DestinationNoteList = "note_list"
 
 
 // Navigate functions
-fun NavHostController.navigateAllTodos() {
-    if (currentDestination?.route.equals(DestinationAllTodos).not()) {
-        navigate(DestinationAllTodos)
+fun NavHostController.navigateTodosDate() {
+    if (currentDestination?.route.equals(DestinationTodosDate).not()) {
+        navigate(DestinationTodosDate)
     }
 }
 
-fun NavHostController.navigateTodayTodos() {
-    navigate(DestinationTodayTodos)
+fun NavHostController.navigateTodosWithoutDate() {
+    if (currentDestination?.route.equals(DestinationTodosWithoutDate).not()) {
+        navigate(DestinationTodosWithoutDate)
+    }
 }
 
 fun NavHostController.navigateAddTodo() {
@@ -77,6 +98,12 @@ fun NavHostController.navigateAddTodo() {
 
 fun NavHostController.navigateTodoDetail(id: Long) {
     navigate(DestinationTodoDetail.replaceArg(ArgTodoId, id.toString()))
+}
+
+fun NavHostController.navigateNoteList() {
+    if (currentDestination?.route.equals(DestinationNoteList).not()) {
+        navigate(DestinationNoteList)
+    }
 }
 
 
