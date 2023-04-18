@@ -23,7 +23,7 @@ val uiModule = module {
     viewModel { TodoListVM(get()) }
     viewModel { TodoAddVM(get()) }
     viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), noteDao = get(), todoId = todoId) }
-    viewModel { NoteListVM(get()) }
+    viewModel { NoteListVM(get(), get()) }  // TODO druhý get smazat
 }
 
 private fun Module.db() {

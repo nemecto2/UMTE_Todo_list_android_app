@@ -17,12 +17,13 @@ class TodoDetailVM(
     var todo = todoDao.selectById(todoId)
     var notes = noteDao.selectByTodoId(todoId)
 
-    fun addOrUpdate(todoEntity: TodoEntity, noteEntity: NoteEntity, todo: String, date: String?, note: String) {
+    fun addOrUpdate(todoEntity: TodoEntity, noteEntity: NoteEntity, todo: String, date: String?, note: String, imageUri: String?) {
         launch {
             todoDao.insertOrUpdate(
                 todoEntity.copy(
                     text = todo,
                     date = date,
+                    imageUri = imageUri,
                 )
             )
 

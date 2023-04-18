@@ -22,36 +22,38 @@ fun TodoListScreen (
     // Vytažení všech TODOS z VM
     val todos = viewModel.todos.collectAsState(emptyList())
 
-    // Sestavení pohledu
-    Column {
-        if (todos.value.isEmpty()) {
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
-            Text(
-                text = "Žádná připomínka k zobrazení",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-            )
-        }
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1F),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(16.dp),
-        ) {
-            items(
-                items = todos.value,
-                key = { todo -> todo.id },
-            ) { todo ->
-                Todo(
-                    text = todo.text,
-                    checked = todo.checked,
-                    handleChecked = { viewModel.handleTodoCheck(todo) },
-                    handleDetail = { controller.navigateTodoDetail(todo.id) },
+    Box {
+        // Sestavení pohledu
+        Column {
+            if (todos.value.isEmpty()) {
+                Spacer(
+                    modifier = Modifier.height(16.dp)
                 )
+                Text(
+                    text = "Žádná připomínka k zobrazení",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                )
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1F),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(16.dp),
+            ) {
+                items(
+                    items = todos.value,
+                    key = { todo -> todo.id },
+                ) { todo ->
+                    Todo(
+                        text = todo.text,
+                        checked = todo.checked,
+                        handleChecked = { viewModel.handleTodoCheck(todo) },
+                        handleDetail = { controller.navigateTodoDetail(todo.id) },
+                    )
+                }
             }
         }
     }

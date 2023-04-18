@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import cz.uhk.umte.ui.notifications.NotificationScreen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -51,5 +52,7 @@ fun NoteListScreen(
                 )
             }
         }
+
+        NotificationScreen(viewModel.todoDao)
     }
 }

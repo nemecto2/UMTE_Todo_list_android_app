@@ -23,4 +23,7 @@ interface TodoDao {
 
     @Query("SELECT * FROM TodoEntity WHERE id=:id")
     fun selectById(id: Long): Flow<TodoEntity>
+
+    @Query("SELECT * FROM TodoEntity WHERE `date` IS NOT NULL AND DATE(`date`) = DATE('now')")
+    fun selectToday(): Flow<List<TodoEntity>>
 }
