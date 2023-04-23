@@ -1,6 +1,5 @@
 package cz.uhk.umte.ui.screens.todo_list_date
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,15 +8,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import cz.uhk.umte.db.entities.TodoEntity
 import cz.uhk.umte.func.formatDate
 import cz.uhk.umte.ui.navigateTodoDetail
 import cz.uhk.umte.ui.components.todo.Todo
@@ -88,8 +84,7 @@ fun TodoListDateScreen (
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxHeight(0.94f) // 0.94
-                        .background(Color.Red),
+                        .fillMaxHeight(0.94f), // 0.94
 //                    .weight(1F),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     contentPadding = PaddingValues(16.dp),
