@@ -12,6 +12,9 @@ interface TodoDao {
     @Delete
     fun delete(todo: TodoEntity)
 
+    @Query("DELETE FROM TodoEntity WHERE `date` IS NOT NULL AND DATE(`date`) < DATE('now')")
+    fun deleteOld()
+
     @Query("SELECT * FROM TodoEntity WHERE `date` IS NOT NULL AND DATE(`date`) >= DATE('now') ORDER BY `date`")
     fun selectAllFollowing(): Flow<List<TodoEntity>>
 
