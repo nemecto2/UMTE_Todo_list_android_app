@@ -18,7 +18,7 @@ interface NoteDao {
     fun deleteByTodoId(id: Long)
 
     @Query("SELECT * FROM NoteEntity WHERE todoId=:id")
-    fun selectByTodoId(id: Long): Flow<List<NoteEntity>>
+    fun selectByTodoId(id: Long): Flow<NoteEntity>
 
     @Query("SELECT * FROM NoteEntity")
     fun selectAll(): Flow<List<NoteEntity>>

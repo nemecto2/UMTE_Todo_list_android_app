@@ -13,11 +13,15 @@ import cz.uhk.umte.ui.screens.todo_add.TodoAddScreen
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailScreen
 import cz.uhk.umte.ui.screens.todo_list.TodoListScreen
 import cz.uhk.umte.ui.screens.todo_list_date.TodoListDateScreen
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun Layout(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: LayoutVM = getViewModel()
 ) {
+//    NotificationsHandler(viewModel.todoDao)
+
     NavHost(
         navController = navController,
         startDestination = DestinationTodosDate,
