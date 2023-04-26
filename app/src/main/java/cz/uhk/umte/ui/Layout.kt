@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import cz.uhk.umte.ui.notifications.NotificationManager
+import cz.uhk.umte.ui.notifications.NotificationScreen
 import cz.uhk.umte.ui.screens.note_list.NoteListScreen
 import cz.uhk.umte.ui.screens.todo_add.TodoAddScreen
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailScreen
@@ -20,7 +23,10 @@ fun Layout(
     navController: NavHostController,
     viewModel: LayoutVM = getViewModel()
 ) {
-//    NotificationsHandler(viewModel.todoDao)
+    NotificationScreen()
+//    val context = LocalContext.current
+//    val notificationManager = NotificationManager(context, viewModel.todoDao)
+
 
     NavHost(
         navController = navController,
@@ -65,6 +71,7 @@ fun Layout(
         ) {
             NoteListScreen(
                 controller = navController,
+//                notificationManager = notificationManager,
             )
         }
     }

@@ -3,6 +3,7 @@ package cz.uhk.umte.di
 import androidx.room.Room
 import cz.uhk.umte.db.AppDatabase
 import cz.uhk.umte.ui.LayoutVM
+import cz.uhk.umte.ui.notifications.NotificationManager
 import cz.uhk.umte.ui.screens.note_list.NoteListVM
 import cz.uhk.umte.ui.screens.todo_add.TodoAddVM
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailVM

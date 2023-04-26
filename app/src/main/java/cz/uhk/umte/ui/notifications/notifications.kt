@@ -37,9 +37,9 @@ const val NOTIFICATION_GROUP_ID: String = "today_todos"
 
 @Composable
 fun NotificationScreen(
-    todoDao: TodoDao
+//    todoDao: TodoDao
 ) {
-    val todos = todoDao.selectToday().collectAsState(emptyList())
+//    val todos = todoDao.selectToday().collectAsState(emptyList())
 
     val context = LocalContext.current
 
@@ -58,27 +58,29 @@ fun NotificationScreen(
             permissionGranted.value = granted
         },
     )
+//
+//    checkAndRequestPermission(context, launcher)
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-
-        Button(onClick = { checkAndRequestPermission(context, launcher) }) {
-            Text(text = "Získat oprávnění")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(text = "Oprávnění získáno: ${permissionGranted.value}")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(onClick = { sendPushNotification(context, todos.value) }) {
-            Text(text = "Odeslat notifikaci")
-        }
-    }
+//    Column(
+//        modifier = Modifier.fillMaxSize(),
+//        verticalArrangement = Arrangement.Center,
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//    ) {
+//
+//        Button(onClick = { checkAndRequestPermission(context, launcher) }) {
+//            Text(text = "Získat oprávnění")
+//        }
+//
+//        Spacer(modifier = Modifier.height(16.dp))
+//
+//        Text(text = "Oprávnění získáno: ${permissionGranted.value}")
+//
+//        Spacer(modifier = Modifier.height(16.dp))
+//
+//        Button(onClick = { sendPushNotification(context, todos.value) }) {
+//            Text(text = "Odeslat notifikaci")
+//        }
+//    }
 }
 
 
@@ -154,7 +156,7 @@ fun checkAndRequestPermission(
     }
 }
 
-private fun Context.isNotificationGranted() =
+fun Context.isNotificationGranted() =
     ActivityCompat.checkSelfPermission(
         this,
         Manifest.permission.POST_NOTIFICATIONS
