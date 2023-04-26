@@ -1,23 +1,8 @@
 package cz.uhk.umte.ui.notifications
 
-import android.Manifest
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import android.widget.Toast
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import cz.uhk.umte.db.dao.TodoDao
-import java.lang.Exception
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationManager(
