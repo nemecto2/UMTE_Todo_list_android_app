@@ -27,104 +27,56 @@ fun TodoListDateScreen (
     // Vytažení všech TODOS z VM
     val todos = viewModel.todos.collectAsState(emptyList())
 
-    Box(
+    viewModel.deleteOldTodos()
+
+
+    // Sestavení pohledu
+    Column(
         modifier = Modifier.fillMaxSize()
-    )  {
-        // Sestavení pohledu
-        Column(
-            modifier = Modifier.fillMaxSize()
+    ) {
+        var date = ""
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.94f),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(16.dp),
         ) {
-//            val splitTodos: MutableList<MutableList<TodoEntity>> = mutableListOf()
-//
-//            var date = ""
-//            var i = -1
-//            for (todo in todosFromVM.value) {
-//                if (!todo.date.equals(date)) {
-//                    splitTodos.add(mutableListOf())
-//                    date = todo.date.orEmpty()
-//                    i++
-//                }
-//
-//                splitTodos[i].add(todo)
-//            }
-//
-//
-//            if (todosFromVM.value.isEmpty()) {
-//                Spacer(
-//                    modifier = Modifier.height(16.dp)
-//                )
-//                Text(
-//                    text = "Žádná připomínka k zobrazení",
-//                    modifier = Modifier.fillMaxWidth(),
-//                    textAlign = TextAlign.Center,
-//                )
-//            }
+            items(
+                items = todos.value,
+                key = { todo -> todo.id },
+            ) { todo ->
+                /* Check new date */
+                if (todo.date != date) {
+                    Divider(
+                        color = MaterialTheme.colors.secondary,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(1.dp)
+                    )
 
-            // TODO Je lepší přidávat data takto (pomocí více LazyColumn), nebo v jednom Lazy Column před první prvek?
-//            for (todos in splitTodos) {
-//
-//                Divider(
-//                    color = MaterialTheme.colors.secondary,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(1.dp)
-//                )
-//
-//                Text(
-//                    text = formatDate(todos[0].date.orEmpty()),
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 16.sp,
-//                    textAlign = TextAlign.Center,
-//                    modifier = Modifier.fillMaxWidth(),
-//                    color = MaterialTheme.colors.secondary
-//                )
-
-                var date = ""
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.94f), // 0.94
-//                    .weight(1F),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    contentPadding = PaddingValues(16.dp),
-                ) {
-                    items(
-                        items = todos.value,
-                        key = { todo -> todo.id },
-                    ) { todo ->
-                        /* Check new date */
-                        if (todo.date != date) {
-                            Divider(
-                                color = MaterialTheme.colors.secondary,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(1.dp)
-                            )
-
-                            Text(
-                                text = formatDate(todo.date.orEmpty()),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colors.secondary
-                            )
-                        }
-                        date = todo.date.orEmpty()
-
-
-                        /* End of checking new date*/
-
-                        Todo(
-                            text = todo.text,
-                            checked = todo.checked,
-                            handleChecked = { viewModel.handleTodoCheck(todo) },
-                            handleDetail = { controller.navigateTodoDetail(todo.id) },
-                        )
-                    }
+                    Text(
+                        text = formatDate(todo.date.orEmpty()),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colors.secondary
+                    )
                 }
-//            }
+                date = todo.date.orEmpty()
+
+
+                /* End of checking new date*/
+
+                Todo(
+                    text = todo.text,
+                    checked = todo.checked,
+                    handleChecked = { viewModel.handleTodoCheck(todo) },
+                    handleDetail = { controller.navigateTodoDetail(todo.id) },
+                )
+            }
         }
     }
 }

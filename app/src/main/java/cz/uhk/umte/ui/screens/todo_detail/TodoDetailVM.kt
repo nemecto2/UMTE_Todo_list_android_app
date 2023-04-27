@@ -1,13 +1,10 @@
 package cz.uhk.umte.ui.screens.todo_detail
 
-import androidx.compose.runtime.collectAsState
 import cz.uhk.umte.db.dao.NoteDao
 import cz.uhk.umte.db.dao.TodoDao
 import cz.uhk.umte.db.entities.NoteEntity
 import cz.uhk.umte.db.entities.TodoEntity
 import cz.uhk.umte.ui.base.BaseViewModel
-import cz.uhk.umte.ui.base.State
-import kotlinx.coroutines.flow.Flow
 
 class TodoDetailVM(
     private val todoDao: TodoDao,
@@ -15,7 +12,7 @@ class TodoDetailVM(
     private val todoId: Long,
 ): BaseViewModel() {
     var todo = todoDao.selectById(todoId)
-    var notes = noteDao.selectByTodoId(todoId)
+    var note = noteDao.selectByTodoId(todoId)
 
     fun addOrUpdate(todoEntity: TodoEntity, noteEntity: NoteEntity, todo: String, date: String?, note: String, imageUri: String?) {
         launch {

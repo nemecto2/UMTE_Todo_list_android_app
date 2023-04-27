@@ -21,4 +21,11 @@ class TodoListDateVM(
             )
         }
     }
+
+    // Funkce pro screen
+    fun deleteOldTodos() {
+        launch {
+            todoDao.deleteOld()
+        }
+    }
 }

@@ -2,6 +2,8 @@ package cz.uhk.umte.di
 
 import androidx.room.Room
 import cz.uhk.umte.db.AppDatabase
+import cz.uhk.umte.ui.LayoutVM
+import cz.uhk.umte.ui.notifications.NotificationManager
 import cz.uhk.umte.ui.screens.note_list.NoteListVM
 import cz.uhk.umte.ui.screens.todo_add.TodoAddVM
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailVM
@@ -24,6 +26,7 @@ val uiModule = module {
     viewModel { TodoAddVM(get()) }
     viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), noteDao = get(), todoId = todoId) }
     viewModel { NoteListVM(get(), get()) }  // TODO druhý get smazat
+    viewModel { LayoutVM(get()) }
 }
 
 private fun Module.db() {

@@ -2,7 +2,10 @@ package cz.uhk.umte.ui.screens.todo_detail
 
 import android.app.DatePickerDialog
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,10 +24,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
 import cz.uhk.umte.db.entities.NoteEntity
 import cz.uhk.umte.db.entities.TodoEntity
 import cz.uhk.umte.func.formatDate
@@ -47,9 +50,7 @@ fun TodoDetailScreen(
 
     // TODO jak udělat načítání do inputů z DB?
     val todo = viewModel.todo.collectAsState(TodoEntity())
-    val noteList = viewModel.notes.collectAsState(emptyList())
-
-    val note by remember { mutableStateOf(if (noteList.value.size == 1) noteList.value[0] else NoteEntity(todoId = todoId))}
+    val note = viewModel.note.collectAsState(NoteEntity())
 
     val showDeleteDialog = remember { mutableStateOf(false) }
 
@@ -60,7 +61,7 @@ fun TodoDetailScreen(
     var updateText by remember { mutableStateOf(todo.value.text) }
     var updateDate by remember { mutableStateOf(todo.value.date.orEmpty()) }
     var updateImageUri by remember { mutableStateOf<Uri?>(if (todo.value.imageUri == null) null else Uri.parse(todo.value.imageUri)) }
-    var updateNote by remember { mutableStateOf(note.text) }
+    var updateNote by remember { mutableStateOf(note.value.text) }
 
     var updateImage by remember { mutableStateOf("") }
 
@@ -116,7 +117,7 @@ fun TodoDetailScreen(
 
                         viewModel.addOrUpdate(
                             todoEntity = todo.value,
-                            noteEntity = note,
+                            noteEntity = note.value,
                             todo = updateText,
                             date = if (updateDate == "") null else updateDate,
                             note = updateNote,
@@ -245,52 +246,59 @@ fun TodoDetailScreen(
                 ) {
                     Image(
                         imageVector = Icons.Default.Home,
-                        contentDescription = "Přidat obrázek"
+                        contentDescription = "Přidat nebo upravit obrázek"
                     )
                     Spacer(
                         modifier = Modifier.width(16.dp)
                     )
-                    Text(
-                        text = "Přidat obrázek"
-                    )
+
+                    if (updateImageUri == null) {
+                        Text(
+                            text = "Přidat obrázek"
+                        )
+                    } else {
+                        Text(
+                            text = "Upravit obrázek"
+                        )
+                    }
                 }
 
-                Text(text = updateImageUri.toString())
+//                Text(text = updateImageUri.toString())
             }
 
-//            updateImageUri?.let {
-//                if (Build.VERSION.SDK_INT < 28) {
-//                    bitmap.value = MediaStore
-//                        .Images
-//                        .Media
-//                        .getBitmap(context.contentResolver, updateImageUri)
-//                } else {
-//                    val source = ImageDecoder.createSource(context.contentResolver, it)
-//                    bitmap.value = ImageDecoder.decodeBitmap(source)
-//                }
-//
-////                val byteArrayOutputStream = ByteArrayOutputStream()
-////                bitmap.value?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-////                val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-////                updateImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-//            }
-//
-//
-//            bitmap.value?.let { bitmap ->
-//                Image(
-//                    bitmap = bitmap.asImageBitmap(),
-//                    contentDescription = null,
-//                    modifier = Modifier.size(400.dp).padding(20.dp)
-//                )
-//            }
+            updateImageUri?.let {
+                if (Build.VERSION.SDK_INT < 28) {
+                    bitmap.value = MediaStore
+                        .Images
+                        .Media
+                        .getBitmap(context.contentResolver, updateImageUri)
+                } else {
+                    val source = ImageDecoder.createSource(context.contentResolver, it)
+                    bitmap.value = ImageDecoder.decodeBitmap(source)
+                }
 
-            var r = updateImageUri?.toString()?.replace("content://","")?.let { File(it) }
-            println(r)
+//                val byteArrayOutputStream = ByteArrayOutputStream()
+//                bitmap.value?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+//                val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
+//                updateImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            }
 
-            AsyncImage(
-                model = File(r),
-                contentDescription = null
-            )
+
+            bitmap.value?.let { bitmap ->
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier.size(400.dp).padding(20.dp)
+                )
+            }
+
+//            var r = updateImageUri?.toString()?.replace("content://","")?.let { File(it) }
+//            println(r)
+//
+//            AsyncImage(
+//                model = File(r),
+//                contentDescription = null
+//            )
 
 
             // DIVIDER //////////////////////

@@ -10,4 +10,5 @@ class NoteListVM(
     val todoDao: TodoDao,
 ) : BaseViewModel() {
     var notes = noteDao.selectAll()
+    var todos = todoDao.selectToday()
 }
