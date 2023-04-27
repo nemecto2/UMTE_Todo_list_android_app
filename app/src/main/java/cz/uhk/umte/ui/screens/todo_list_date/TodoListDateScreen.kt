@@ -36,6 +36,17 @@ fun TodoListDateScreen (
     ) {
         var date = ""
 
+        if (todos.value.isEmpty()) {
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+            Text(
+                text = "Žádná připomínka k zobrazení",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+            )
+        }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()

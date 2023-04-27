@@ -2,10 +2,7 @@ package cz.uhk.umte.ui.components.navigation
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import cz.uhk.umte.ui.*
@@ -35,9 +32,9 @@ fun Navbar (
             selected = true
         )
         BottomNavigationItem(
-            label = { Text(text = "Poznámky") },
+            label = { Text(text = "Nastavení") },
             onClick = { navController.navigateNoteList() },
-            icon = { Icon(Icons.Default.Edit, "") },
+            icon = { Icon(Icons.Default.Settings, "") },
             selected = true
         )
     }

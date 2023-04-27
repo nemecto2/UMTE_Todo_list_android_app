@@ -36,11 +36,7 @@ const val NOTIFICATION_GROUP_ID: String = "today_todos"
 
 
 @Composable
-fun NotificationScreen(
-//    todoDao: TodoDao
-) {
-//    val todos = todoDao.selectToday().collectAsState(emptyList())
-
+fun NotificationScreen() {
     val context = LocalContext.current
 
     val permissionGranted = remember {
@@ -58,29 +54,6 @@ fun NotificationScreen(
             permissionGranted.value = granted
         },
     )
-//
-//    checkAndRequestPermission(context, launcher)
-
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//    ) {
-//
-//        Button(onClick = { checkAndRequestPermission(context, launcher) }) {
-//            Text(text = "Získat oprávnění")
-//        }
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        Text(text = "Oprávnění získáno: ${permissionGranted.value}")
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        Button(onClick = { sendPushNotification(context, todos.value) }) {
-//            Text(text = "Odeslat notifikaci")
-//        }
-//    }
 }
 
 

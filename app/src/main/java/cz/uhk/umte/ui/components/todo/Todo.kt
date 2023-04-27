@@ -1,7 +1,6 @@
 package cz.uhk.umte.ui.components.todo
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,13 +8,9 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cz.uhk.umte.db.dao.NoteDao
-import cz.uhk.umte.db.dao.TodoDao
-import cz.uhk.umte.db.entities.TodoEntity
 
 @Composable
 fun Todo(

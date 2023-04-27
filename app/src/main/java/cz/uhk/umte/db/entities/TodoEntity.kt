@@ -11,5 +11,4 @@ data class TodoEntity(
     val checked: Boolean = false,
     val date: String? = null, // Date
     val imageUri: String? = null,
-//    val note: String = "",
 )
