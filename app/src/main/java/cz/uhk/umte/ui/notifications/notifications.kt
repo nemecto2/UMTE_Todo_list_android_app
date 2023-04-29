@@ -7,27 +7,12 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import cz.uhk.umte.R
-import cz.uhk.umte.db.dao.TodoDao
 import cz.uhk.umte.db.entities.TodoEntity
 
 
@@ -35,26 +20,6 @@ const val NOTIFICATION_CHANNEL_ID: String = "General"
 const val NOTIFICATION_GROUP_ID: String = "today_todos"
 
 
-@Composable
-fun NotificationScreen() {
-    val context = LocalContext.current
-
-    val permissionGranted = remember {
-        mutableStateOf(context.isNotificationGranted())
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { granted ->
-            if (granted) {
-                Toast.makeText(context, "Povoleno", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Zamítnuto", Toast.LENGTH_SHORT).show()
-            }
-            permissionGranted.value = granted
-        },
-    )
-}
 
 
 
@@ -113,24 +78,25 @@ fun sendPushNotification(context: Context, todos: List<TodoEntity>) {
     }
 }
 
-fun checkAndRequestPermission(
-    context: Context,
-    launcher: ManagedActivityResultLauncher<String, Boolean>,
-) {
-    val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
-    } else {
-        PackageManager.PERMISSION_GRANTED
-    }
-    if (granted == PackageManager.PERMISSION_GRANTED) {
-        // Povolení je uděleno
-    } else {
-        launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-    }
-}
-
 fun Context.isNotificationGranted() =
     ActivityCompat.checkSelfPermission(
         this,
         Manifest.permission.POST_NOTIFICATIONS
     ) == PackageManager.PERMISSION_GRANTED
+
+
+//fun checkAndRequestPermission(
+//    context: Context,
+//    launcher: ManagedActivityResultLauncher<String, Boolean>,
+//) {
+//    val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+//    } else {
+//        PackageManager.PERMISSION_GRANTED
+//    }
+//    if (granted == PackageManager.PERMISSION_GRANTED) {
+//        // Povolení je uděleno
+//    } else {
+//        launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//    }
+//}

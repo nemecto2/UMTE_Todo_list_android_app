@@ -20,11 +20,13 @@ class NotificationReceiver : BroadcastReceiver() {
         println("TU")
         if (context == null) { return }
 
-        runBlocking {
-            launch {
-                todoDao.selectToday().collect { todos ->
-                    println(todos)
-                    sendPushNotification(context, todos)
+        if (context.isNotificationGranted()) {
+            runBlocking {
+                launch {
+                    todoDao.selectToday().collect { todos ->
+                        println(todos)
+                        sendPushNotification(context, todos)
+                    }
                 }
             }
         }

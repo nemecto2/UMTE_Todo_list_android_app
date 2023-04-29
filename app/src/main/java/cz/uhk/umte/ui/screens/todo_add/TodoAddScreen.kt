@@ -3,6 +3,7 @@ package cz.uhk.umte.ui.screens.todo_add
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -30,6 +32,7 @@ fun TodoAddScreen(
 
     var inputText by remember { mutableStateOf("") }
     var selectedDateText by remember { mutableStateOf(DEFAULT_DATE_PATTERN) }
+    var noteText by remember { mutableStateOf("") }
 
     @Composable
     fun DatePicker(): DatePickerDialog {
@@ -93,7 +96,8 @@ fun TodoAddScreen(
                         viewModel.addOrUpdateTodo(
                             TodoEntity(
                                 text = inputText,
-                                date = if (selectedDateText == DEFAULT_DATE_PATTERN) null else selectedDateText
+                                date = if (selectedDateText == DEFAULT_DATE_PATTERN) null else selectedDateText,
+                                note = noteText.ifEmpty { null },
                             )
                         )
                         controller.popBackStack()
@@ -138,6 +142,28 @@ fun TodoAddScreen(
             )
 
             Text(text = formatDate(selectedDateText))
+        }
+
+        Spacer(
+            modifier = Modifier.height(16.dp)
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)
+        ) {
+            OutlinedTextField(
+                value = noteText,
+                onValueChange = { noteText = it },
+                label = {
+                    Text(text = "Připomínka")
+                },
+                modifier = Modifier
+                    .weight(1F)
+                    .fillMaxWidth()
+//                    .fillMaxHeight()
+            )
         }
     }
 }

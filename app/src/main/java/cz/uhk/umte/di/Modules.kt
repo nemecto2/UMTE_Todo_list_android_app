@@ -23,8 +23,8 @@ val uiModule = module {
     viewModel { TodoListDateVM(get()) }
     viewModel { TodoListVM(get()) }
     viewModel { TodoAddVM(get()) }
-    viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), noteDao = get(), todoId = todoId) }
-    viewModel { NoteListVM(get(), get()) }  // TODO druhý get smazat
+    viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), /*noteDao = get(),*/ todoId = todoId) }
+    viewModel { NoteListVM(get()) }  // TODO druhý get smazat
     viewModel { LayoutVM(get()) }
 }
 

@@ -1,5 +1,7 @@
 package cz.uhk.umte.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
@@ -8,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import cz.uhk.umte.ui.notifications.NotificationScreen
 import cz.uhk.umte.ui.screens.note_list.NoteListScreen
 import cz.uhk.umte.ui.screens.todo_add.TodoAddScreen
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailScreen
@@ -16,13 +17,14 @@ import cz.uhk.umte.ui.screens.todo_list.TodoListScreen
 import cz.uhk.umte.ui.screens.todo_list_date.TodoListDateScreen
 import org.koin.androidx.compose.getViewModel
 
+
+//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun Layout(
     navController: NavHostController,
     viewModel: LayoutVM = getViewModel()
 ) {
-    NotificationScreen()
-
     NavHost(
         navController = navController,
         startDestination = DestinationTodosDate,

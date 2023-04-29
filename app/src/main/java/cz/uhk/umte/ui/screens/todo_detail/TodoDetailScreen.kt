@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -34,7 +33,6 @@ import cz.uhk.umte.func.formatDate
 import cz.uhk.umte.ui.components.dialogs.DeleteDialog
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
-import java.io.File
 import java.util.*
 
 
@@ -48,9 +46,8 @@ fun TodoDetailScreen(
 ) {
     val context = LocalContext.current
 
-    // TODO jak udělat načítání do inputů z DB?
     val todo = viewModel.todo.collectAsState(TodoEntity())
-    val note = viewModel.note.collectAsState(NoteEntity())
+//    val note = viewModel.note.collectAsState(NoteEntity())
 
     val showDeleteDialog = remember { mutableStateOf(false) }
 
@@ -61,9 +58,8 @@ fun TodoDetailScreen(
     var updateText by remember { mutableStateOf(todo.value.text) }
     var updateDate by remember { mutableStateOf(todo.value.date.orEmpty()) }
     var updateImageUri by remember { mutableStateOf<Uri?>(if (todo.value.imageUri == null) null else Uri.parse(todo.value.imageUri)) }
-    var updateNote by remember { mutableStateOf(note.value.text) }
-
-    var updateImage by remember { mutableStateOf("") }
+    var updateNote by remember { mutableStateOf(todo.value.note) }
+//    var updateNote by remember { mutableStateOf(note.value.text) }
 
     @Composable
     fun DatePicker(): DatePickerDialog {
@@ -92,9 +88,10 @@ fun TodoDetailScreen(
         return datePicker
     }
 
+
     val datePicker = DatePicker()
 
-    // TODO proč hlavní column není scrollovatelný? Je to důvod nastavení velikosti?
+
     Column(
         modifier = Modifier
             .padding(16.dp)
@@ -117,7 +114,7 @@ fun TodoDetailScreen(
 
                         viewModel.addOrUpdate(
                             todoEntity = todo.value,
-                            noteEntity = note.value,
+//                            noteEntity = note.value,
                             todo = updateText,
                             date = if (updateDate == "") null else updateDate,
                             note = updateNote,
@@ -172,7 +169,7 @@ fun TodoDetailScreen(
 
 
         if (todo.value != null) {
-//        if (updateText != "") {
+
             // Input ///////////////
             OutlinedTextField(
                 value = updateText,
@@ -205,7 +202,6 @@ fun TodoDetailScreen(
                         imageVector = Icons.Default.DateRange,
                         contentDescription = "Add",
                         modifier = Modifier.size(48.dp),
-                        colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onBackground),
                     )
                 }
 
@@ -215,6 +211,16 @@ fun TodoDetailScreen(
 
                 Text(text = formatDate(updateDate ?: "--.--.----"))
             }
+
+            // NOTE //////////////////////
+            OutlinedTextField(
+                value = updateNote.orEmpty(),
+                onValueChange = { updateNote = it },
+                label = {
+                    Text(text = "Poznámka")
+                },
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+            )
 
 
             // DIVIDER //////////////////////
@@ -301,26 +307,16 @@ fun TodoDetailScreen(
 //            )
 
 
-            // DIVIDER //////////////////////
-            Spacer(modifier = Modifier.height(16.dp))
-            Divider(
-                color = MaterialTheme.colors.secondary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+//            // DIVIDER //////////////////////
+//            Spacer(modifier = Modifier.height(16.dp))
+//            Divider(
+//                color = MaterialTheme.colors.secondary,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(1.dp)
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
 
-
-            // NOTE //////////////////////
-            OutlinedTextField(
-                value = updateNote,
-                onValueChange = { updateNote = it },
-                label = {
-                    Text(text = "Poznámka")
-                },
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f),
-            )
         }
 
         // DELETE DIALOG ////////////
