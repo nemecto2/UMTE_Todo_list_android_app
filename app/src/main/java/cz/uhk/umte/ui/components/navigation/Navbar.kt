@@ -33,7 +33,7 @@ fun Navbar (
         )
         BottomNavigationItem(
             label = { Text(text = "Nastavení") },
-            onClick = { navController.navigateNoteList() },
+            onClick = { navController.navigateSettings() },
             icon = { Icon(Icons.Default.Settings, "") },
             selected = true
         )

@@ -9,44 +9,44 @@ class NotificationManager() {
     companion object {
         private val REQUEST_CODE: Int = 51312
 
-        fun schedule(context: Context, alarmManager: AlarmManager?) {
-            // Set the alarm to start at 8:30 a.m.
-//        val calendar: Calendar = Calendar.getInstance().apply {
-//            timeInMillis = System.currentTimeMillis()
-//            set(Calendar.HOUR_OF_DAY, 8)
-//            set(Calendar.MINUTE, 30)
-//        }
-            val calendar: Calendar = Calendar.getInstance()
-            println(calendar.time)
-            calendar.add(Calendar.SECOND, 15)
-            println(calendar.time)
+        fun getTimeInMillis(hour: Int, minute: Int): Long {
+            val calendar: Calendar = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+            }
 
+            return calendar.timeInMillis
+        }
 
-            val intent = Intent(context, NotificationReceiver::class.java)
-//                          .apply {
-//                              putExtra("TODOS", "message")
-//                              println("Notification:   calendar")
-//                          }
+        fun schedule(context: Context, alarmManager: AlarmManager?, timeInMillis: Long, intent: Intent? = null) {
+            // Set the alarm to start at given time
+            val intentLocal = intent ?: Intent(context, NotificationReceiver::class.java)
 
             val pendingIntent =  PendingIntent.getBroadcast(
                 context,
                 REQUEST_CODE,
-                intent,
+                intentLocal,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
 
-            alarmManager?.setRepeating(
+//            alarmManager?.setRepeating(
+//                AlarmManager.RTC_WAKEUP,
+//                timeInMillis,
+//                AlarmManager.INTERVAL_DAY,
+//                pendingIntent
+//            )
+            alarmManager?.setExact(
                 AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
+                timeInMillis,
                 pendingIntent
             )
         }
 
 
-        fun cancel(context: Context, alarmManager: AlarmManager) {
-            alarmManager.cancel(
+        fun cancel(context: Context, alarmManager: AlarmManager?) {
+            alarmManager?.cancel(
                 PendingIntent.getBroadcast(
                     context,
                     REQUEST_CODE,

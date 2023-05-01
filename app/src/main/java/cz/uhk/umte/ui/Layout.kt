@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import cz.uhk.umte.ui.screens.note_list.NoteListScreen
+import cz.uhk.umte.ui.screens.settings.SettingsScreen
 import cz.uhk.umte.ui.screens.todo_add.TodoAddScreen
 import cz.uhk.umte.ui.screens.todo_detail.TodoDetailScreen
 import cz.uhk.umte.ui.screens.todo_list.TodoListScreen
@@ -64,11 +64,9 @@ fun Layout(
         }
 
         composable(
-            route = DestinationNoteList,
+            route = DestinationSettings,
         ) {
-            NoteListScreen(
-                controller = navController,
-            )
+            SettingsScreen()
         }
     }
 }
@@ -81,7 +79,7 @@ private const val DestinationTodosWithoutDate = "todos_without_date"
 private const val DestinationTodosDate = "todos_date"
 private const val DestinationAddTodo = "add_todo"
 private const val DestinationTodoDetail = "todo_detail/{$ArgTodoId}"
-private const val DestinationNoteList = "note_list"
+private const val DestinationSettings = "note_list"
 
 
 // Navigate functions
@@ -107,9 +105,9 @@ fun NavHostController.navigateTodoDetail(id: Long) {
     navigate(DestinationTodoDetail.replaceArg(ArgTodoId, id.toString()))
 }
 
-fun NavHostController.navigateNoteList() {
-    if (currentDestination?.route.equals(DestinationNoteList).not()) {
-        navigate(DestinationNoteList)
+fun NavHostController.navigateSettings() {
+    if (currentDestination?.route.equals(DestinationSettings).not()) {
+        navigate(DestinationSettings)
     }
 }
 
