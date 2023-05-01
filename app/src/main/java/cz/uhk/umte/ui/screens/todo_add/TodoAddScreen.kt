@@ -3,7 +3,6 @@ package cz.uhk.umte.ui.screens.todo_add
 import android.app.DatePickerDialog
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,7 +12,6 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -110,7 +108,6 @@ fun TodoAddScreen(
                     modifier = Modifier.size(24.dp),
                     colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onBackground),
                 )
-//                Text(text = "Přidat")
             }
         }
 
@@ -162,7 +159,6 @@ fun TodoAddScreen(
                 modifier = Modifier
                     .weight(1F)
                     .fillMaxWidth()
-//                    .fillMaxHeight()
             )
         }
     }

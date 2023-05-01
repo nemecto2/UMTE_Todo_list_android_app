@@ -7,11 +7,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import cz.uhk.umte.R
 import cz.uhk.umte.db.entities.TodoEntity
 
@@ -83,20 +81,3 @@ fun Context.isNotificationGranted() =
         this,
         Manifest.permission.POST_NOTIFICATIONS
     ) == PackageManager.PERMISSION_GRANTED
-
-
-//fun checkAndRequestPermission(
-//    context: Context,
-//    launcher: ManagedActivityResultLauncher<String, Boolean>,
-//) {
-//    val granted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
-//    } else {
-//        PackageManager.PERMISSION_GRANTED
-//    }
-//    if (granted == PackageManager.PERMISSION_GRANTED) {
-//        // Povolení je uděleno
-//    } else {
-//        launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
-//    }
-//}

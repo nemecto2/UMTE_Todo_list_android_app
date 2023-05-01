@@ -29,8 +29,8 @@ val uiModule = module {
     viewModel { TodoListDateVM(get()) }
     viewModel { TodoListVM(get()) }
     viewModel { TodoAddVM(get()) }
-    viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), /*noteDao = get(),*/ todoId = todoId) }
-    viewModel { SettingsVM(get(), get()) }  // TODO druhý get smazat
+    viewModel { (todoId: Long) ->  TodoDetailVM(todoDao = get(), todoId = todoId) }
+    viewModel { SettingsVM(get(), get()) }
     viewModel { LayoutVM(get()) }
 }
 
@@ -47,7 +47,7 @@ private fun Module.db() {
             .build()
     }
     // Dao
-    single { get<AppDatabase>().noteDao() }
+//    single { get<AppDatabase>().noteDao() }
     single { get<AppDatabase>().todoDao() }
 }
 

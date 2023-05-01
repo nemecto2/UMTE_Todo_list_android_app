@@ -56,7 +56,6 @@ fun TodoDetailScreen(
         var updateDate by remember { mutableStateOf(todo.value.date.orEmpty()) }
         var updateImageUri by remember { mutableStateOf<Uri?>(if (todo.value.imageUri == null) null else Uri.parse(todo.value.imageUri)) }
         var updateNote by remember { mutableStateOf(todo.value.note) }
-    //    var updateNote by remember { mutableStateOf(note.value.text) }
 
         @Composable
         fun DatePicker(): DatePickerDialog {
@@ -111,7 +110,6 @@ fun TodoDetailScreen(
 
                             viewModel.addOrUpdate(
                                 todoEntity = todo.value,
-    //                            noteEntity = note.value,
                                 todo = updateText,
                                 date = if (updateDate == "") null else updateDate,
                                 note = updateNote,
@@ -272,8 +270,6 @@ fun TodoDetailScreen(
                             )
                         }
                     }
-
-    //                Text(text = updateImageUri.toString())
                 }
 
                 updateImageUri?.let {
@@ -286,11 +282,6 @@ fun TodoDetailScreen(
                         val source = ImageDecoder.createSource(context.contentResolver, it)
                         bitmap.value = ImageDecoder.decodeBitmap(source)
                     }
-
-    //                val byteArrayOutputStream = ByteArrayOutputStream()
-    //                bitmap.value?.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-    //                val byteArray: ByteArray = byteArrayOutputStream.toByteArray()
-    //                updateImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
 
 
@@ -301,26 +292,6 @@ fun TodoDetailScreen(
                         modifier = Modifier.size(400.dp).padding(20.dp)
                     )
                 }
-
-    //            var r = updateImageUri?.toString()?.replace("content://","")?.let { File(it) }
-    //            println(r)
-    //
-    //            AsyncImage(
-    //                model = File(r),
-    //                contentDescription = null
-    //            )
-
-
-    //            // DIVIDER //////////////////////
-    //            Spacer(modifier = Modifier.height(16.dp))
-    //            Divider(
-    //                color = MaterialTheme.colors.secondary,
-    //                modifier = Modifier
-    //                    .fillMaxWidth()
-    //                    .height(1.dp)
-    //            )
-    //            Spacer(modifier = Modifier.height(8.dp))
-
             }
 
             // DELETE DIALOG ////////////
