@@ -20,7 +20,7 @@ import cz.uhk.umte.ui.components.todo.Todo
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun TodoListDateScreen (
+fun TodoListDateScreen(
     controller: NavHostController,
     viewModel: TodoListDateVM = getViewModel(),
 ) {
@@ -62,11 +62,8 @@ fun TodoListDateScreen (
                 if (todo.date != date) {
                     Divider(
                         color = MaterialTheme.colors.secondary,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(1.dp)
+                        modifier = Modifier.fillMaxWidth().height(1.dp)
                     )
-
                     Text(
                         text = formatDate(todo.date.orEmpty()),
                         fontWeight = FontWeight.Bold,
@@ -77,15 +74,13 @@ fun TodoListDateScreen (
                     )
                 }
                 date = todo.date.orEmpty()
-
-
                 /* End of checking new date*/
 
                 Todo(
                     text = todo.text,
                     checked = todo.checked,
                     handleChecked = { viewModel.handleTodoCheck(todo) },
-                    handleDetail = { controller.navigateTodoDetail(todo.id) },
+                    handleDetail = { controller.navigateTodoDetail(todo.id) }
                 )
             }
         }

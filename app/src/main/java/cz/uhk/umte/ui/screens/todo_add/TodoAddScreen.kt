@@ -154,7 +154,7 @@ fun TodoAddScreen(
                 value = noteText,
                 onValueChange = { noteText = it },
                 label = {
-                    Text(text = "Připomínka")
+                    Text(text = "Poznámka")
                 },
                 modifier = Modifier
                     .weight(1F)

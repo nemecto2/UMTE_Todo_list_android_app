@@ -18,7 +18,6 @@ import cz.uhk.umte.ui.screens.todo_list_date.TodoListDateScreen
 import org.koin.androidx.compose.getViewModel
 
 
-//@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun Layout(
